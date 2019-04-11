@@ -1,0 +1,62 @@
+#background {
+    position: absolute;
+    left: 0;
+    z-index: 0;
+    max-width: 100%;
+}
+#head {
+    max-width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+#about {
+    max-width: 100%;
+    position: absolute;
+    right: 4%;
+    z-index: 2;
+    font-size: 1rem;
+    color: white;
+}
+#whoami {
+    max-width: 100%;
+    position: absolute;
+    right: 4%;
+    z-index: 2;
+    text-decoration: underline;
+    font-size: 1.5rem;
+    color: rgb(255, 242, 126);
+}
+#leftButtons {
+    width: 40%;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+}
+#rightButtons {
+    width: 40%;
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    opacity: 0.87;
+}
+#practice {
+    float: right;
+    margin: 10% 0 10% 0;
+    max-width: 100%;
+}
+#compete {
+    float: right;
+    margin: 5% 0 0 0;
+    max-width: 110%;
+}
+#history {
+    max-width: 100%;
+    margin: 100% 0 0 0;
+}
+body {
+    background-color: #747b75;
+    height: 100%;
+    width: 100%;
+}

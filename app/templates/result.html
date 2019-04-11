@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>战争游戏·战果</title>
+  <script src="{{ url_for('static', filename='/js/lib/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='/js/lib/echarts.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='/js/draw.js') }}"></script>
+  <link href="{{ url_for('static', filename='/css/result.css') }}" rel="stylesheet" type="text/css" />
+
+  <script>
+    $(document).ready(function () {
+      s = eval('{{ strategy }}');
+      r = eval('{{ result }}');
+      rank = eval('{{ rank }}');
+      time = '{{ time }}';
+      if(s == '')
+          return;
+      // alert('s='+s+',r='+r+',rank='+rank);
+      drawBar(s, r[0], 'bar');
+      drawRadar(r, 'radar');
+      drawRank(r[0], rank, time, 'rank', 'time');
+    });
+  </script>
+</head>
+
+<body>
+  <div id="content">
+      <div style="float: left; width: 5%; margin: 5% 0 0 0;">
+          <input id="return" type="image" src="./img/return.png" onclick="location.href='/practice';">
+        </div>
+      
+        <div style="float:left;width: 40%; margin: 5% 0 0 0;">
+          <img id='titleImg' src='./img/resultHead.png'>
+        </div>
+
+        <div style="clear:both"></div>
+        {% if strategy == '' %}
+        <p>你尚未提交布阵，无法查看结果</p>
+        {% else %}
+        <div id="board-text">
+          <p id="rank"></p>
+          <p id="time"></p>
+        </div>
+        <div id="board-bar">
+          <div id="bar"></div>
+        </div>
+        <div id="board-radar">
+          <div id="radar"></div>
+        </div>
+        {% endif %}
+  </div>
+</body>
+
+</html>

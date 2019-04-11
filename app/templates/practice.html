@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>战争游戏·训练场</title>
+    <meta name="viewport" content="width=320, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="{{ url_for('static', filename='/js/lib/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='/js/lib/jquery.mobile-1.4.5.min.js') }}"></script>
+    <link href="{{ url_for('static', filename='/css/practice.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='/css/lib/jquery.mobile-1.4.5.min.css') }} " rel="stylesheet" type="text/css">
+
+    <script>
+        var total = 0;
+        var isClicked = true;
+
+        function updateValue() {
+            total = 0;
+            for (var i = 1; i < 11; i++) {
+                var value = document.getElementById("area" + i.toString()).value;
+                value = parseInt(value);
+                if (value < 0)
+                    value = 0;
+                else if (value > 100)
+                    value = 100;
+                total += value;
+            }
+            var label = document.getElementById("total");
+            var text = "剩余兵力: " + (100 - total).toString();
+            if (total > 100) {
+                label.style.color =  "red";
+                text += ",NO";
+            } else {
+                label.style.color = "white";
+                if (total < 100)
+                    text += "";
+                else if (total == 100)
+                    text += ",OK";
+            }
+            label.innerHTML = text;
+        }
+
+        function checkSubmit() {
+            if (isClicked == false)
+                return false;
+            if (total == 100) {
+                //return true;
+                document.getElementsByTagName("form")[0].submit();
+            }
+            else if (total > 100) {
+                alert("布阵人数超过限制，\n请检查并修改后再提交: (");
+                return false;
+            }
+            else {
+                alert("布阵人数小于100，\n请检查并修改后再提交: (");
+                return false;
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <div data-role="page" id="pageone" style="background-color:#A0A9B0;">
+
+        <div data-role="content" style="width:80%; margin:20px auto;" id="pageone">
+            <form method="POST" action="/result" onkeydown="if(event.keyCode==13){return false;}" onsubmit="return false;">
+
+                <div style="float: left; width: 5%;">
+                    <input id="return" type="image" src="./img/return.png" onclick="isClicked=false; location.href='/war';">
+                </div>
+
+                <div style="float:left;width: 40%">
+                    <img id='titleImg' src='./img/practiceLogo.png'>
+                </div>
+
+                <div style="float: right;width: auto; margin-right: 5%">
+                    <a id="history" href="" onclick="location.href='/practiceHistory';">历史训练成绩</a>
+                    <br /><label id="total">剩余兵力: 100</label>
+                </div>
+
+                <div style="clear:both"></div>
+
+                <!-- <div style="float:left; width:50%; margin: 20px auto"> -->
+                <label for="area1" style="color:white;margin:20px 0">第一战区:</label>
+                <input type="range" name="area1" id="area1" value="0" min="0" max="100" data-popup-enabled="true"
+                    data-highlight="true" onchange="updateValue()">
+
+                <label for="area2" style="color:white;margin:20px 0">第二战区:</label>
+                <input type="range" name="area2" id="area2" value="0" min="0" max="100" data-popup-enabled="true"
+                    data-highlight="true" onchange="updateValue()">
+
+                <label for="area3" style="color:white;margin:20px 0">第三战区:</label>
+                <input type="range" name="area3" id="area3" value="0" min="0" max="100" data-popup-enabled="true"
+                    data-highlight="true" onchange="updateValue()">
+
+                <label for="area4" style="color:white;margin:20px 0">第四战区:</label>
+                <input type="range" name="area4" id="area4" value="0" min="0" max="100" data-popup-enabled="true"
+                    data-highlight="true" onchange="updateValue()">
+
+                <label for="area5" style="color:white;margin:20px 0">第五战区:</label>
+                <input type="range" name="area5" id="area5" value="0" min="0" max="100" data-popup-enabled="true"
+                    data-highlight="true" onchange="updateValue()">
+
+                <!-- </div> -->
+                <!-- <div style="float:right; width:50%; margin: 20px auto"> -->
+                <label for="area6" style="color:white;margin:20px 0">第六战区:</label>
+                <input type="range" name="area6" id="area6" value="0" min="0" max="100" data-popup-enabled="true"
+                    data-highlight="true" onchange="updateValue()">
+
+                <label for="area7" style="color:white;margin:20px 0">第七战区:</label>
+                <input type="range" name="area7" id="area7" value="0" min="0" max="100" data-popup-enabled="true"
+                    data-highlight="true" onchange="updateValue()">
+
+                <label for="area8" style="color:white;margin:20px 0">第八战区:</label>
+                <input type="range" name="area8" id="area8" value="0" min="0" max="100" data-popup-enabled="true"
+                    data-highlight="true" onchange="updateValue()">
+
+                <label for="area9" style="color:white;margin:20px 0">第九战区:</label>
+                <input type="range" name="area9" id="area9" value="0" min="0" max="100" data-popup-enabled="true"
+                    data-highlight="true" onchange="updateValue()">
+
+                <label for="area10" style="color:white;margin:20px 0">第十战区:</label>
+                <input type="range" name="area10" id="area10" value="0" min="0" max="100" data-popup-enabled="true"
+                    data-highlight="true" onchange="updateValue()">
+                <!-- </div> -->
+                <!-- <div style="clear:both"></div> -->
+                <img id="submitBack" src="./img/submitBar.png" z-index=-1>
+                <input id="submitBtn" type="image" src="./img/submit.png" onclick="checkSubmit();">
+            </form>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

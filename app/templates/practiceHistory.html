@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>战争游戏·历史训练数据</title>
+    <script src="{{ url_for('static', filename='/js/lib/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='/js/lib/echarts.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='/js/draw.js') }}"></script>
+    <link href="{{ url_for('static', filename='/css/practiceHistory.css') }}" rel="stylesheet" type="text/css" />
+
+    <script>
+        $(document).ready(function () {
+            var data = {{ history| tojson }};
+            var index = 0;
+            // 必须使用一个数组把options存起来，不然只能显示一个图表！
+            var options = [];
+            data = data.reverse();
+            for (var index = 0; index < data.length; index++) {
+                entry = data[index];
+                var now = entry[0];
+                var strategy = entry[1].split(',');
+                var result = entry[2].split(',');
+                var rank = parseInt(entry[3]);
+                for (var s = 0; s < strategy.length; s++) {
+                    strategy[s] = parseInt(strategy[s]);
+                }
+                for (var r = 0; r < result.length; r++) {
+                    result[r] = parseFloat(result[r]);
+                }
+                var block = '<div class="board-text">\
+                <p class="rank" id="rank{}"></p>\
+                <p class="time" id="time{}"></p>\
+            </div>\
+            <div class="board-bar">\
+                <div class="bar" id="bar{}"></div>\
+            </div>'.replace('{}', index.toString()).replace('{}', index.toString()).replace('{}', index.toString());
+                document.getElementById("rankList").innerHTML += block;
+                options.push(createBarOption(strategy, result));
+                drawRank(result, rank, now, 'rank' + index.toString(), 'time' + index.toString());
+            }
+            for (var i = 0; i < data.length; i++) {
+                var myChart = echarts.init(document.getElementById('bar' + i.toString()));
+                myChart.setOption(options[i]);
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div id="content">
+        <div style="float: left; width: 5%; margin: 5% 0 0 0;">
+            <input id="return" type="image" src="./img/return.png" onclick="location.href='/practice';">
+        </div>
+
+        <div style="float:left;width: 60%; margin: 5% 0 0 0;">
+            <img id='titleImg' src='./img/historyLogo.png'>
+        </div>
+
+        <div style="clear:both"></div>
+        {% if history == '' %}
+        <p style="font-size:50px;color:white">你尚未提交过布阵。</p>
+        {% else %}
+        <div id="rankList">
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

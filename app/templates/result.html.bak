@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>战争游戏·战果</title>
+  <script src="{{ url_for('static', filename='/js/lib/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='/js/lib/Chart.min.js') }}"></script>
+  <script>
+    $(document).ready(function () {
+      s = eval('{{ strategy }}');
+      r = eval('{{ result }}');
+      var h = screen.height;
+      var w = screen.width;
+      document.getElementById("bar").style.height = h;
+      document.getElementById("bar").style.width = w;
+
+      var data = {
+        labels: ["战区一", "战区二", "战区三", "战区四", "战区五", "战区六", "战区七", "战区八", "战区九", "战区十"],
+        datasets: [
+          {
+            label: null,
+            backgroundColor: "rgba(255, 236, 181, 1)",
+            borderColor: "rgba(151,187,205,0)",
+            data: r[0]
+          },
+          // {
+          //   label: "他方胜率",
+          //   backgroundColor: "rgba(220,220,220,0.5)",
+          //   borderColor: "rgba(220,220,220,1)",
+          //   data: r[1]
+          // }
+        ]
+      };
+      var options = {
+        responsive: true,
+        scales: {
+          xAxes: [{
+            gridLines: {
+              color: 'rgba(0, 0, 0, 0)',// 隐藏x轴方向轴线
+              zeroLineColor: '#FFFFFF'// 设置轴颜色
+            },
+            barPercentage: 1,// 设置柱宽度
+            // ticks: {// 设置轴文字字号和色值
+            //   fontSize: 12,
+            //   fontColor: '#FFFFFF'
+            // }
+          }],
+          yAxes: [{
+            gridLines: {
+              color: 'rgba(0, 0, 0, 0)',// 隐藏要y轴轴线
+              zeroLineColor: '#FFFFFF'
+            },
+            // ticks: {
+            //   fontSize: 12,
+            //   beginAtZero: true,// y轴数据从0开始展示
+            //   fontColor: '#FFFFFF'
+            // }
+          }]
+        }
+      };
+
+      var ctx = document.getElementById("bar").getContext("2d");
+      var chart = new Chart(ctx, {
+        type: "bar",
+        data: data,
+        options: options
+      });
+
+      document.getElementById("board").style.height = document.getElementById("bar").style.height * 1.2;
+    });
+
+    $(window).resize(function () {
+      document.getElementById("board").style.height = document.getElementById("bar").style.height * 1.2;
+    });
+  </script>
+  <style>
+    #titleImg {
+      max-width: 100%;
+      max-height: 100%;
+      margin-left: 15%;
+    }
+    #board {
+      margin: 5%;
+      width: 80%;
+      /* height: 40%; */
+      background-color: rgb(37, 37, 37);
+      border-radius: 10px;
+    }
+    /* #bar {
+      float:left;
+    }
+    #radar {
+      float: right;
+    } */
+    body {
+      background-color: rgb(146, 146, 146);
+    }
+  </style>
+</head>
+
+<body>
+  <div style="float: left; width: 5%;">
+    <input id="return" type="image" src="./img/return.png" onclick="location.href='/practice';">
+  </div>
+
+  <div style="float:left;width: 40%">
+    <img id='titleImg' src='./img/resultHead.png'>
+  </div>
+  <div style="clear:both"></div>
+  {% if strategy == '' %}
+  <p>你尚未提交布阵，无法查看结果</p>
+  {% else %}
+  <div id="board">
+    <canvas id="bar"></canvas>
+  </div>
+  <div id="board">
+    <canvas id="radar"></canvas>
+  </div>
+  {% endif %}
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=320, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="{{ url_for('static', filename='/js/lib/jquery.min.js') }}"></script>
+    <link href="{{ url_for('static', filename='/css/instruct.css') }}" rel="stylesheet" type="text/css" />
+    <script>
+        function slide(index) {
+            var panel = $('#panel' + index.toString());
+            panel.slideToggle();
+        }
+        $(function () {
+            $('#panel1').slideToggle();
+            $('#panel2').slideToggle();
+        });
+    </script>
+
+</head>
+
+<body>
+
+
+    <div id="main" data-role="main" class="ui-content">
+
+        <div style="float: left; width: 4%;">
+            <input id="return" type="image" src="./img/return.png" onclick="isClicked=false; javascript:history.back(-1);">
+        </div>
+        <div style="float: right; right: 10%;">
+            <a id="link" href="http://itper.org/Tpl/default/Public/attached/file/20181008012800.docx" download>
+                <h3>游戏的具体规则参考18级报名表附件“战争游戏说明”</h3>
+            </a>
+        </div>
+
+        <div style="clear:both"></div>
+
+        <div id="flip1" onclick="slide(1);">竞技场</div>
+        <div id="panel1">
+            <p>每晚 7-9 点开放竞技场进行游戏</p>
+            <p>每 10 分钟一轮游戏，玩家可以在提交时间内提交该轮的布阵</p>
+            <p>每一轮开始时可以查看自己上一轮以及之前的战绩</p>
+        </div>
+
+        <div id="flip2" onclick="slide(2);">训练场</div>
+        <div id="panel2">
+            <p>训练场每天 24 小时开放</p>
+            <p>两次提交间隔至少为 1 分钟，玩家可以在提交后立刻查看结果</p>
+            <p>训练场中的对手为前一天所有提交成功的布阵，每天中午 12 点更新</p>
+        </div>
+    </div>
+
+</body>
+
+</html>

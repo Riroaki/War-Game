@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="{{ url_for('static', filename='/js/lib/jquery.min.js') }}"></script>
+    <link href="{{ url_for('static', filename='/css/lib/materialize.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='/css/login.css') }}" rel="stylesheet" type="text/css" />
+    <script src="{{ url_for('static', filename='/js/lib/materialize.min.js') }}"></script>
+    <title>战争游戏·登陆</title>
+    <script>
+        function submitUser() {
+            document.getElementsByTagName("form")[0].submit();
+        }
+    </script>
+</head>
+
+<body>
+    <img id="background" src="./img/unicorn.png">
+    <div id="board"></div>
+    <div id="contents">
+        <label id="head">登录</label>
+        <form method="post" action='/login'>
+
+            <div class="input-field col s6" style="position: absolute; top: 30%; left: 15%; width: 70%">
+                <input id="user_id" name="user_id" type="text" class="validate">
+                <label for="user_id">ITP账号</label>
+            </div>
+            <div class="input-field col s6" style="position: absolute; top: 40%; left: 15%; width: 70%">
+                <input id="pwd" name="pwd" type="password" class="validate">
+                <label for="pwd">密码</label>
+            </div>
+            <label id="warning">{{ warning }}</label>
+            <img id="start" onclick="submitUser();" src="{{ url_for('static', filename='./img/start.png') }}">
+            <div id="prompt">
+                <label>还没有账号？</label><a onclick="location.href='http://itper.org'">注册ITP账号</a>
+            </div>
+    </div>
+
+    </form>
+    </div>
+</body>

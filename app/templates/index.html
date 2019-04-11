@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>战争游戏</title>
+    <meta name="viewport" content="width=device-width" />
+    <script src="{{ url_for('static', filename='/js/lib/jquery.min.js') }}"></script>
+    <link href="{{ url_for('static', filename='/css/index.css') }}" rel="stylesheet" type="text/css" />
+    <!-- <script src="{{ url_for('static', filename='/js/initWindow.js') }}"></script> -->
+    <script>
+        $(document).ready(function () {
+            document.getElementById("whoami").innerText = '{{ whoami }}';
+            var headHeight = screen.width * 17 / 32;
+            var totalHeight = screen.height;
+            $("#background").css("top", headHeight * 0.55);
+            $("#about").css("top", headHeight * 0.7);
+            $("#whoami").css("top", headHeight * 0.80);
+            if (totalHeight < headHeight * 2.3) {
+                $("#rightButtons").css("top", headHeight * 1.2);
+                $("#leftButtons").css("top", headHeight * 1.4);
+            } else {
+                $("#rightButtons").css("top", headHeight * 1.5);
+                $("#leftButtons").css("top", headHeight * 1.7);
+            }
+        });
+        function gotoCompete() {
+            var date = new Date();
+            var hour = date.getHours();
+            var start = eval('{{ start }}'), end = eval('{{ end }}');
+            if(hour >= start && hour < end)
+                location.href = '/compete';
+            else
+                alert('现在是' + hour.toString() + '点，竞技场尚未开放，请在' + start.toString() + '点到' + end.toString() + '点过来看看');
+        }
+    </script>
+</head>
+
+<body>
+    <img id="head" src="./img/head.png">
+    <img id="background" src="./img/unicorn.png">
+    <a id="about" onclick="location.href='/instruct'"><u>About the Game</u></a>
+    <u><a id="whoami" onclick="location.href='/login'"></a></u>
+    <!-- <p><a id="wechat" href=""><strong>ʕ •ᴥ•ʔ当你看到这行字的时候请点击右上角“...”并选择在浏览器中打开～</strong>></a></p> -->
+    <div id="rightButtons">
+        <input id="practice" type="image" src="./img/practice.png" onclick="location.href='/practice';">
+        <input id="compete" type="image" src="./img/compete.png" onclick="gotoCompete();">
+    </div>
+    <div id="leftButtons">
+        <input id="history" type="image" src="./img/rank.png" onclick="location.href='/ranks';">
+    </div>
+</body>
+
+</html>
